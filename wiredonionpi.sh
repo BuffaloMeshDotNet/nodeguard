@@ -89,7 +89,7 @@ echo "Writing new torrc file..."
 cat > /etc/tor/torrc <<'_EOF'
 
 Log notice file /var/log/tor/notices.log
-VirtualAddrNetwork 10.192.0.0/10
+VirtualAddrNetwork 172.16.0.0/12
 AutomapHostsSuffixes .onion,.exit
 AutomapHostsOnResolve 1
 TransPort 9040
