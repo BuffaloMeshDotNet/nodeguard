@@ -39,6 +39,8 @@ cd /home/pi
 echo "Getting files:"
 
 echo "Installing required programs via apt..."
+apt-get update
+
 apt-get -y install wget isc-dhcp-server tor &>/dev/null
 
 # And, for security, and science...  You monster.
@@ -98,6 +100,16 @@ DNSPort 53
 DNSListenAddress 192.168.42.1
 _EOF
 
+echo "Writing wpa supplicant file..."
+#You can get the below information using wpa_passphrase command on any machine
+cat > /etc/wpa_supplicant/wpa_supplicant.conf <<'_EOF'
+network={
+	ssid="YOUR SSID GOES HERE"
+	#psk="Your ASCII Passphrase here"
+	psk=The encyrpted form goes here
+}
+_EOF
+
 echo "Writing new network interfaces file..."
 cat > /etc/network/interfaces <<'_EOF'
 auto lo
@@ -107,8 +119,7 @@ iface lo inet loopback
 
 allow-hotplug wlan0
 iface wlan0 inet dhcp
-	wpa-ssid "Your Wifi SSID Here"
-	psk=Your PSK key here,generated using wpa_passphrase
+	wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
 
 iface eth0 inet static
  address 192.168.42.1
