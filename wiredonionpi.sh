@@ -15,7 +15,7 @@
 #
 #################################################################
 
-cat << '_EOF'
+cat << _EOF
 This is the OnionPi build script.  It's designed to completely automate turning
 your Raspberry Pi into a wired router, that tunnels all traffic over the TOR
 network.
